@@ -1,26 +1,15 @@
 # -*- coding: utf-8 -*-
-"""
-@author: luomeng
-回测框架更新--切换成两种模式：
-1.按照开盘、收盘和结算价格进行回测
-2.按照买一买二买三的成交价格进行回测
-按照市场流动性买卖：
-加入单品种的手续费率、止损设置
-
-"""
 import numpy as np
+import pandas as pd
 
 def BackTest_I(pred,p0,p1,c0,code=None,n=1,z=1,k=0,lev=1,alpha=1):
     '''
-    回测函数：
-    p0:open price # 开盘价格
-    p1:settle price # 结算价格用于计算每日的浮动盈亏
-    c0:close price # 收盘价格用于计算展期和止损
-    code:合约代码
-    n:窗口时间
-    z:展期前天数
-    lev:杠杆
-    alpha:止损
+    Backtest function:
+    pred: Signal
+    p0: Open price
+    c0: Close price # Calculate daily floating profit and loss
+    k: Commission rate
+    alpha: Stop loss
     '''
     m=len(pred) 
     capital=p0[0]/lev
