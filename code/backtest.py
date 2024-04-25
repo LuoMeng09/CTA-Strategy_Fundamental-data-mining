@@ -29,12 +29,12 @@ def BackTest_I(pred,p0,p1,c0,code=None,n=1,z=1,k=0,lev=1,alpha=1):
         if pos==1: 
             if pred[i]==1:                  
                 if (count==0) and (i<=m-z-1) and (code[i]!=code[i+z]):
-                    pos=1 #平仓盈亏 =（卖出成交价-买入成交价）*交易单位*平仓手数， priceB是上次的买入价格，在nan中寻找上一策最近的买入价格，只有上次买入时，才会产生买入价格
+                    pos=1 
                     p=c0
-                    count=z #第z日的code不等于当天code，展期换仓
-                    capital=capital-pricesB[np.max(np.where(~np.isnan(pricesB)))]+(1-k)*p[i]#上日结存-当日买入价（开盘价）+次日买入价（开盘价）+手续费
+                    count=z
+                    capital=capital-pricesB[np.max(np.where(~np.isnan(pricesB)))]+(1-k)*p[i]
                     pricesB[i]=p[i]
-                    capital=capital-k*pricesB[i] #当日结存=上日结存（逐步对冲）+平仓盈亏+入金-出金-手续费
+                    capital=capital-k*pricesB[i] 
                     net=np.append(net,(capital-pricesB[i]+c[i]))
                 else:                                       
                     if (pricesB[np.max(np.where(~np.isnan(pricesB)))]-c[i])>alpha*(pricesB[np.max(np.where(~np.isnan(pricesB)))]):
@@ -42,7 +42,7 @@ def BackTest_I(pred,p0,p1,c0,code=None,n=1,z=1,k=0,lev=1,alpha=1):
                         net=np.append(net,capital)
                         pos=0                     
                     else:
-                        net=np.append(net,(capital-pricesB[np.max(np.where(~np.isnan(pricesB)))]+c[i]))#持续做多：原有浮动收益+次日价格（open）
+                        net=np.append(net,(capital-pricesB[np.max(np.where(~np.isnan(pricesB)))]+c[i]))
                         pos=1
             elif pred[i]==0:               
                 capital=capital-pricesB[np.max(np.where(~np.isnan(pricesB)))]+(1-k)*p[i]
@@ -50,9 +50,9 @@ def BackTest_I(pred,p0,p1,c0,code=None,n=1,z=1,k=0,lev=1,alpha=1):
                 net=np.append(net,capital)
             elif pred[i]==-1:
                 if (count==0) and (i<=m-z-1) and (code[i]!=code[i+z]):
-                    pos=-1 #合约换月 
+                    pos=-1
                     p=c0
-                    count=z #第z日的code不等于当天code，展期换仓
+                    count=z
                     capital=capital-pricesB[np.max(np.where(~np.isnan(pricesB)))]+(1-k)*p[i]
                     pricesS[i]=p[i]
                     capital=capital-k*pricesS[i]
@@ -74,7 +74,7 @@ def BackTest_I(pred,p0,p1,c0,code=None,n=1,z=1,k=0,lev=1,alpha=1):
                 if (count==0) and (i<=m-z-1) and (code[i]!=code[i+z]):
                     pos=-1
                     p=c0
-                    count=z #第z日的code不等于当天code，展期换仓
+                    count=z
                     capital=capital+pricesS[np.max(np.where(~np.isnan(pricesS)))]-(1+k)*p[i]
                     pricesS[i]=p[i]
                     capital=capital-k*pricesS[i]
@@ -95,7 +95,7 @@ def BackTest_I(pred,p0,p1,c0,code=None,n=1,z=1,k=0,lev=1,alpha=1):
                 if (count==0) and (i<=m-z-1) and (code[i]!=code[i+z]):
                     pos=1
                     p=c0
-                    count=z #第z日的code不等于当天code，展期换仓
+                    count=z 
                     capital=capital+pricesS[np.max(np.where(~np.isnan(pricesS)))]-(1+k)*p[i]
                     pricesB[i]=p[i]
                     capital=capital-k*pricesB[i]
@@ -116,7 +116,7 @@ def BackTest_I(pred,p0,p1,c0,code=None,n=1,z=1,k=0,lev=1,alpha=1):
                 if (count==0) and (i<=m-z-1) and (code[i]!=code[i+z]):
                     pos=1
                     p=c0
-                    count=z #第z日的code不等于当天code，展期换仓
+                    count=z
                     pricesB[i]=p[i]
                     capital=capital-k*pricesB[i]
                     net=np.append(net,capital-pricesB[i]+c[i])
@@ -134,7 +134,7 @@ def BackTest_I(pred,p0,p1,c0,code=None,n=1,z=1,k=0,lev=1,alpha=1):
                 if (count==0) and (i<=m-z-1) and (code[i]!=code[i+z]): 
                     pos=-1
                     p=c0
-                    count=z #第z日的code不等于当天code，展期换仓                   
+                    count=z            
                     pricesS[i]=p[i]
                     capital=capital-k*pricesS[i]
                     net=np.append(net,capital+pricesS[i]-c[i])
