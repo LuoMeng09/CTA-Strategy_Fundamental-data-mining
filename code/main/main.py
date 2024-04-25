@@ -44,7 +44,7 @@ def IC_test(dfs,subclass,price_return,year_start,year_end):
                     'weekly':[[2,53],[1,2]]} # 52 weeks
     
     for i in class_list: 
-        print('大类=',i)
+
         result_ = pd.DataFrame()
         # counting weight of factors
         for fac in dfs[subclass].columns: 
@@ -80,7 +80,7 @@ def Factor_Select(class_list,ics,dfs,year_start,year_end):
                     temp_fac = pd.DataFrame(DataFre(dfs[i][fac],windows,method=1,year=year_start,k=None,fre='weekly'))
                     temp_train = pd.DataFrame(temp_fac.loc[temp_fac.index.year <= year_end])
                     data_train = pd.concat([data_train,temp_train],axis=1).dropna()
-                    temp_test = pd.DataFrame(temp_fac.loc[temp_fac.index.year > year_end]) # 测试集部分
+                    temp_test = pd.DataFrame(temp_fac.loc[temp_fac.index.year > year_end]) 
                     data_test = pd.concat([data_test,temp_test],axis=1).dropna()
                 
         # processing data
@@ -92,7 +92,7 @@ def Factor_Select(class_list,ics,dfs,year_start,year_end):
         
 
 def Trading_Sgl(dfs,price_return,ics,start_date):
-    fac_sgl = pd.DataFrame() # 单因子信号 
+    fac_sgl = pd.DataFrame() 
     for i in class_list:
         print(i)
         fac_test, price_test = DateSame(dfs[i],price_return)   
